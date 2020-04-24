@@ -1,0 +1,54 @@
+{
+  "Items": {
+    "__objectIsNamedArray": true,
+    "I1": {
+      "title": {
+        "ru": "Штука1",
+        "en": "Item1"
+      },
+      "image": true,
+      "namedArrays": {
+        "__objectIsNamedArray": true,
+        "T1": {
+          "title": {
+            "ru": "Текст1",
+            "en": "Text1"
+          }
+        },
+        "T2": {
+          "title": {
+            "ru": "Текст2",
+            "en": "Text2"
+          }
+        }
+      }
+    },
+    "I2": {
+      "title": {
+        "en": "Item2"
+      },
+      "image": false,
+      "number": "num",
+      "nullvalue": null,
+      "dict": {
+        "remove": "bugs",
+        "more": [
+          9,
+          8,
+          7,
+          6
+        ]
+      }
+    },
+    "I3": {
+      "title": {
+        "en": "Item3"
+      },
+      "list": [
+        "one",
+        "two",
+        "three"
+      ]
+    }
+  }
+}
