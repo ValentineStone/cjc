@@ -1,7 +1,8 @@
+#!python3
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-import io
 import platform
 import os
 import json
@@ -261,6 +262,7 @@ def prototype_to_table(prototype, table, cur=None):
         cur.col += 1
 
 def element_root_to_table(root, prototype, table, cur):
+    indx_row = cur.row
     if isinstance(prototype, dict):
         if NAMED_ARRAY_KEY in prototype:
             total_rowheight = 0
@@ -275,10 +277,11 @@ def element_root_to_table(root, prototype, table, cur):
                     if index < len(root):
                         cur.col = indx_col
                         cur.row += rowheight
+                    else:
+                        cur.row = indx_row
             return total_rowheight
         else:
             max_rowheight = 0
-            indx_row = cur.row
             for index, (key, value) in enumerate(prototype.items(), 1):
                 if key != NAMED_ARRAY_KEY:
                     rowheight = element_root_to_table(root[key], value, table, cur)
@@ -300,6 +303,8 @@ def element_root_to_table(root, prototype, table, cur):
             if index < len(root):
                 cur.col = indx_col
                 cur.row += rowheight
+            else:
+                cur.row = indx_row
         return total_rowheight
     else:
         table.set(cur.row, cur.col, value=root)
@@ -431,17 +436,6 @@ class Application:
         self.window = tk.Tk()
         self.window.title('CJConverter')
 
-        self.window.option_add('*Background', COLOR_MENU_BACKGROUND)
-        self.window.option_add('*Foreground', COLOR_MENU_FOREGROUND)
-        self.window.option_add('*BorderWidth', 0)
-        self.window.option_add('*InsertBackground', COLOR_FOREGROUND)
-        ttk.Style().configure('TCheckbutton',
-            padding=[10, 0],
-            background=COLOR_MENU_BACKGROUND,
-            foreground=COLOR_MENU_FOREGROUND)
-        ttk.Style().configure('TEntry',
-            foreground=COLOR_MENU_BACKGROUND)
-
         self.window.columnconfigure(0, weight=1)
         self.window.rowconfigure(1, weight=1)
         #self.window.geometry('400x200')
@@ -451,13 +445,13 @@ class Application:
         self.menu_bar = tk.Frame(self.window, pady=5, padx=5)
         self.menu_bar.grid(row=0, column=0, sticky='nsew')
 
-        self.open_json_button = tk.Button(
+        self.open_json_button = ttk.Button(
             self.menu_bar,
             text='Open-JSON',
             command=self.open_json_button_onclick)
         self.open_json_button.pack(side=tk.LEFT)
 
-        self.open_csv_button = tk.Button(
+        self.open_csv_button = ttk.Button(
             self.menu_bar,
             text='Open-CSV',
             command=self.open_csv_button_onclick)
